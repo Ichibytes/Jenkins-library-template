@@ -1,0 +1,3 @@
+This is an example resource file.
+Resources in the resources/ directory can be accessed from pipeline steps.
+

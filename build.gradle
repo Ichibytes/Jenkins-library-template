@@ -1,0 +1,102 @@
+plugins {
+    id 'groovy'
+    id 'java'
+    id 'jacoco'
+    id 'codenarc'
+}
+
+// Read version from VERSION file
+def versionFile = file('VERSION')
+version = versionFile.exists() ? versionFile.text.trim() : '0.1.0'
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://repo.jenkins-ci.org/releases/'
+    }
+    maven {
+        url 'https://jitpack.io'
+    }
+}
+
+dependencies {
+    // Groovy
+    implementation 'org.codehaus.groovy:groovy-all:3.0.17'
+
+    // Jenkins Pipeline Unit
+    testImplementation 'com.github.jenkinsci:JenkinsPipelineUnit:1.19'
+
+    // JUnit for testing
+    testImplementation 'junit:junit:4.13.2'
+
+    // CodeNarc for Groovy code quality
+    codenarc 'org.codenarc:CodeNarc:3.0.0'
+}
+
+sourceSets {
+    main {
+        groovy {
+            srcDirs = ['src', 'vars']
+        }
+    }
+    test {
+        groovy {
+            srcDirs = ['test']
+        }
+    }
+}
+
+test {
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+    }
+    // Enable parallel test execution
+    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+    finalizedBy jacocoTestReport
+}
+
+// JaCoCo test coverage configuration
+jacoco {
+    toolVersion = "0.8.11"
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = true
+        csv.required = false
+    }
+    executionData.setFrom(fileTree(layout.buildDirectory.dir("jacoco")).include("**/*.exec"))
+    // Exclude vars/ directory from coverage (these are scripts, not compiled classes)
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                '**/vars/**'
+            ])
+        }))
+    }
+}
+
+// CodeNarc configuration for Groovy code quality
+codenarc {
+    toolVersion = '3.0.0'
+    configFile = file('config/codenarc/ruleset.groovy')
+    reportFormat = 'html'
+    ignoreFailures = true  // Don't fail build on code quality issues, just report them
+}
+
+// Task to run tests
+task testLibrary(type: Test) {
+    description = 'Run tests for the Jenkins library'
+    group = 'verification'
+}
+
+// Task to run all quality checks
+task qualityCheck {
+    description = 'Run all code quality checks (tests, coverage, code quality)'
+    group = 'verification'
+    dependsOn test, jacocoTestReport, codenarcMain, codenarcTest
+}
+

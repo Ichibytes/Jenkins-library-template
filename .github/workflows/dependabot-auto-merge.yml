@@ -1,0 +1,63 @@
+name: Dependabot Auto-merge
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+
+# Note: This workflow requires a Personal Access Token (PAT) to be set as a secret.
+#
+# Setup Option 1 - Repository Secret (Current approach):
+# 1. Create a PAT with 'repo' and 'workflow' scopes at: https://github.com/settings/tokens
+# 2. Go to Repository Settings > Secrets and variables > Actions
+# 3. Add a new secret named 'GH_PAT' with your PAT as the value
+#
+# Security Note: pull_request_target is used because Dependabot PRs triggered by
+# 'pull_request' event cannot access repository secrets. We verify the PR is from
+# Dependabot before proceeding to mitigate security risks.
+permissions:
+  contents: write
+  pull-requests: write
+  checks: write
+  statuses: write
+
+jobs:
+  auto-merge:
+    name: Auto-merge Dependabot PRs
+    runs-on: ubuntu-latest
+    # Security check: Only proceed if the PR is from Dependabot
+    if: github.actor == 'dependabot[bot]'
+
+    steps:
+      - name: Dependabot metadata
+        id: dependabot-metadata
+        uses: dependabot/fetch-metadata@v1
+        with:
+          github-token: ${{ secrets.GH_PAT }}
+
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v5
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Run tests
+        run: ./gradlew test --no-daemon
+
+      - name: Auto-merge PR
+        if: |
+          steps.dependabot-metadata.outputs.update-type == 'version-update:semver-patch' ||
+          steps.dependabot-metadata.outputs.update-type == 'version-update:semver-minor'
+        uses: fastify/github-action-merge-dependabot@v3
+        with:
+          github-token: ${{ secrets.GH_PAT }}
+          merge-method: squash

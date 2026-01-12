@@ -1,0 +1,63 @@
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Jenkins
+.jenkins/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# GitHub
+.github/workflows/*.yml.bak
+.github/workflows/*.yaml.bak
+PULL_REQUEST_TEMPLATE.md.bak
+ISSUE_TEMPLATE/*.md.bak
+
+# GitHub Actions artifacts (if any)
+.github/actions/**/node_modules/
+.github/actions/**/dist/
+
+# GitHub Actions workflow runs (local)
+.github/workflows/*.yml.bak
+.github/workflows/*.yaml.bak
+
