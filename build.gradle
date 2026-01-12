@@ -30,7 +30,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
 
     // CodeNarc for Groovy code quality
-    codenarc 'org.codenarc:CodeNarc:3.0.0'
+    codenarc 'org.codenarc:CodeNarc:3.7.0'
 }
 
 sourceSets {
