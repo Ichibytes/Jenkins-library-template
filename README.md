@@ -20,7 +20,9 @@
 - [Testing](#-testing)
 - [Requirements](#-requirements)
 - [Contributing](#-contributing)
+- [Roadmap](#️-roadmap)
 - [License](#-license)
+- [Support](#-support)
 
 ---
 
@@ -72,10 +74,18 @@ Jenkins-library-template/
 ```bash
 git clone https://github.com/Ichibytes/Jenkins-library-template.git
 cd Jenkins-library-template
+```
+
+Before using the library, yo can use the setup script to customize the library for your needs. Check the provided examples in the `vars/` and `src/` directories if you need inspiration before using the setup script.
+
+To run the setup script, use the following command:
+
+```bash
 ./setup.sh
 ```
 
 The setup script will:
+
 - Prompt for your library name and customize all references
 - Remove example files (exampleStep, ExampleUtility, etc.)
 - Clean up the repository for a fresh start
@@ -83,11 +93,13 @@ The setup script will:
 - Delete itself after completion
 
 **Manual Setup (Alternative):**
+
 If you prefer to customize manually, you can skip the script and:
+
+- Remove the setup script
 - Update `settings.gradle` with your library name
 - Replace all references to `jenkins-library-template` in the codebase
 - Remove example files from `vars/`, `src/`, `test/`, and `resources/`
-- Remove the setup script
 
 ### 2. Configure in Jenkins
 
@@ -95,11 +107,11 @@ If you prefer to customize manually, you can skip the script and:
 2. Scroll to **Global Pipeline Libraries** section
 3. Click **Add** to create a new library
 4. Configure the following:
-   - **Name**: `jenkins-library-template` (or your preferred name)
+   - **Name**: `my-jenkins-library` (or your preferred name)
    - **Default Version**: `main` (or your default branch)
    - **Retrieval Method**: Modern SCM
    - **Source Code Management**: Git
-   - **Project Repository**: `https://github.com/Ichibytes/Jenkins-library-template`
+   - **Project Repository**: `https://github.com/<your-username>/my-jenkins-library`
    - **Credentials**: Add if repository is private
 
 ### 3. Use in Your Pipelines
@@ -306,6 +318,12 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 7. Open a Pull Request
 
 For more details, see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+---
+
+## 🗺️ Roadmap
+
+See [ROADMAP.md](ROADMAP.md) for planned features and future enhancements.
 
 ---
 
