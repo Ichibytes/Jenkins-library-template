@@ -21,7 +21,7 @@ repositories {
 
 dependencies {
     // Groovy
-    implementation 'org.codehaus.groovy:groovy-all:3.0.17'
+    implementation 'org.codehaus.groovy:groovy-all:3.0.25'
 
     // Jenkins Pipeline Unit
     testImplementation 'com.github.jenkinsci:JenkinsPipelineUnit:1.19'
