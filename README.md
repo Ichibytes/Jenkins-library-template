@@ -28,6 +28,7 @@
 
 | Feature | Description |
 | ------- | ----------- |
+| 🚀 **Quick Setup** | Automated setup script to customize the template for your library |
 | 🏗️ **Standard Structure** | Proper Jenkins library structure (`vars/`, `src/`, `resources/`) |
 | 🧪 **Unit Testing** | Jenkins Pipeline Unit framework with comprehensive test coverage |
 | 📊 **Coverage Reports** | JaCoCo integration for test coverage reporting |
@@ -66,13 +67,27 @@ Jenkins-library-template/
 
 ## 🚀 Quick Start
 
-### 1. Clone and Customize
+### 1. Clone and Setup
 
 ```bash
 git clone https://github.com/Ichibytes/Jenkins-library-template.git
 cd Jenkins-library-template
-# Customize the library name, examples, and add your own steps
+./setup.sh
 ```
+
+The setup script will:
+- Prompt for your library name and customize all references
+- Remove example files (exampleStep, ExampleUtility, etc.)
+- Clean up the repository for a fresh start
+- Optionally initialize a new git repository
+- Delete itself after completion
+
+**Manual Setup (Alternative):**
+If you prefer to customize manually, you can skip the script and:
+- Update `settings.gradle` with your library name
+- Replace all references to `jenkins-library-template` in the codebase
+- Remove example files from `vars/`, `src/`, `test/`, and `resources/`
+- Remove the setup script
 
 ### 2. Configure in Jenkins
 
