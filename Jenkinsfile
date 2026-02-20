@@ -29,7 +29,9 @@ pipeline {
                         reportDir: 'build/reports/jacoco/test/html',
                         reportFiles: 'index.html',
                         reportName: 'Test Coverage Report',
-                        keepAll: true
+                        keepAll: true,
+                        allowMissing: true,
+                        alwaysLinkToLastBuild: true
                     ])
                 }
             }
@@ -49,13 +51,17 @@ pipeline {
                         reportDir: 'build/reports/codenarc',
                         reportFiles: 'main.html',
                         reportName: 'Code Quality Report (Main)',
-                        keepAll: true
+                        keepAll: true,
+                        allowMissing: true,
+                        alwaysLinkToLastBuild: true
                     ])
                     publishHTML([
                         reportDir: 'build/reports/codenarc',
                         reportFiles: 'test.html',
                         reportName: 'Code Quality Report (Test)',
-                        keepAll: true
+                        keepAll: true,
+                        allowMissing: true,
+                        alwaysLinkToLastBuild: true
                     ])
                 }
             }
