@@ -41,7 +41,7 @@ jobs:
         run: ./gradlew jacocoTestReport --no-daemon
 
       - name: Upload test results
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: test-results-${{ matrix.java-version }}
@@ -49,7 +49,7 @@ jobs:
           retention-days: 30
 
       - name: Upload coverage reports
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: coverage-report-${{ matrix.java-version }}
@@ -87,7 +87,7 @@ jobs:
         run: ./gradlew codenarcMain codenarcTest --no-daemon
 
       - name: Upload code quality reports
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: code-quality-reports
@@ -117,7 +117,7 @@ jobs:
         run: ./gradlew build --no-daemon
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: build-artifacts
